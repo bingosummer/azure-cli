@@ -267,7 +267,7 @@ parameters:
         Specify "azure" to use the Azure dataplane (default) or "cilium" to enable Cilium dataplane.
   - name: --no-ssh-key -x
     type: string
-    short-summary: Do not use or create a local SSH key.
+    short-summary: Do not use or create a local SSH key. Default value is true.
     long-summary: To access nodes after creating a cluster with this option, use the Azure Portal.
   - name: --pod-cidr
     type: string

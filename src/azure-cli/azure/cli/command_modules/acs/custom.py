@@ -489,7 +489,7 @@ def aks_create(
     edge_zone=None,
     admin_username="azureuser",
     generate_ssh_keys=False,
-    no_ssh_key=False,
+    no_ssh_key=True,
     pod_cidr=None,
     service_cidr=None,
     ip_families=None,
