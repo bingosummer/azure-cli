@@ -36,8 +36,6 @@ logger = get_logger(__name__)
 
 
 def validate_ssh_key(namespace):
-    if hasattr(namespace, 'no_ssh_key') and namespace.no_ssh_key:
-        return
     string_or_file = (namespace.ssh_key_value or
                       os.path.join(os.path.expanduser('~'), '.ssh', 'id_rsa.pub'))
     content = string_or_file

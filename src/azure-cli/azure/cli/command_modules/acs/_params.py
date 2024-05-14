@@ -273,7 +273,7 @@ def load_arguments(self, _):
         c.argument('generate_ssh_keys', action='store_true', validator=validate_create_parameters)
         c.argument('ssh_key_value', required=False, type=file_type, default=os.path.join('~', '.ssh', 'id_rsa.pub'),
                    completer=FilesCompleter(), validator=validate_ssh_key)
-        c.argument('no_ssh_key', options_list=['--no-ssh-key', '-x'])
+        c.argument('no_ssh_key', options_list=['--no-ssh-key', '-x'], default=True)
         c.argument('dns_service_ip')
         c.argument('docker_bridge_address', deprecate_info=c.deprecate(target='--docker-bridge-address', hide=True))
         c.argument('pod_cidr')

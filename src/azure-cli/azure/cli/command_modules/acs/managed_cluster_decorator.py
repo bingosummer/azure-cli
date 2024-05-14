@@ -1082,24 +1082,12 @@ class AKSManagedClusterContext(BaseAKSContext):
         else:
             ssh_key_value = raw_value
 
-        # no_ssh_key
-        # read the original value passed by the command
-        no_ssh_key = self.raw_param.get("no_ssh_key")
-
-        # consistent check
-        if read_from_mc and no_ssh_key:
-            raise CLIInternalError(
-                "Inconsistent state detected, ssh_key_value is read from the `mc` object while no_ssh_key is enabled."
-            )
-
         # these parameters do not need dynamic completion
 
         # validation
-        if not no_ssh_key:
+        if ssh_key_value:
             try:
-                if not ssh_key_value or not is_valid_ssh_rsa_public_key(
-                    ssh_key_value
-                ):
+                if not is_valid_ssh_rsa_public_key(ssh_key_value):
                     raise ValueError()
             except (TypeError, ValueError):
                 shortened_key = truncate_text(ssh_key_value)
@@ -1108,7 +1096,7 @@ class AKSManagedClusterContext(BaseAKSContext):
                         shortened_key
                     )
                 )
-        return ssh_key_value, no_ssh_key
+        return ssh_key_value
 
     def get_admin_username(self) -> str:
         """Obtain the value of admin_username.
@@ -5589,7 +5577,7 @@ class AKSManagedClusterCreateDecorator(BaseAKSManagedClusterDecorator):
         self._ensure_mc(mc)
 
         ssh_key_value, no_ssh_key = self.context.get_ssh_key_value_and_no_ssh_key()
-        if not no_ssh_key:
+        if ssh_key_value:
             ssh_config = self.models.ContainerServiceSshConfiguration(
                 public_keys=[
                     self.models.ContainerServiceSshPublicKey(
